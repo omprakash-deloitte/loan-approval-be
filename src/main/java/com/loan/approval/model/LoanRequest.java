@@ -7,6 +7,15 @@ public class LoanRequest {
     private User user;
     private Boolean isEligibleForLoan;
     private Integer loanAmount;
+    private String notificationType;
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
 
     public Integer getLoanAmount() {
         return loanAmount;

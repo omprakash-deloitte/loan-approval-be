@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/loan")
 public class LoanController {
@@ -15,10 +17,14 @@ public class LoanController {
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 
-    @PostMapping("/send-email")
+    @PostMapping("/send-notification")
     public ResponseEntity<String> sendEmailForApproval(@RequestBody LoanRequest loanRequest){
-        System.out.println("Received for approval status " + loanRequest.getEligibleForLoan());
-        System.out.println("Received user name : " + loanRequest.getUser().getUserName());
-        return new ResponseEntity<>("Received for approval",HttpStatus.OK);
+        String sendNotification = "Notification sent";
+        if(Objects.equals(loanRequest.getNotificationType(), "Final")){
+            sendNotification = "Sent Final Notification to " + loanRequest.getUser().getUserName() ;
+        }else {
+            sendNotification = "Sent Loan Approval Notification to " + loanRequest.getUser().getUserName() ;
+        }
+        return new ResponseEntity<>(sendNotification,HttpStatus.OK);
     }
 }
