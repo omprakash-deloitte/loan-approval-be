@@ -11,19 +11,13 @@ import java.util.Objects;
 @RequestMapping("/loan")
 public class LoanController {
 
-    @PostMapping("/create-request")
-    public ResponseEntity<?> createNewLoanRequest(@RequestParam String userName){
-        System.out.println("User Name is : -> " + userName);
-        return new ResponseEntity<>("Created", HttpStatus.CREATED);
-    }
-
     @PostMapping("/send-notification")
     public ResponseEntity<String> sendEmailForApproval(@RequestBody LoanRequest loanRequest){
-        String sendNotification = "Notification sent";
+        String sendNotification;
         if(Objects.equals(loanRequest.getNotificationType(), "Final")){
-            sendNotification = "Sent Final Notification to " + loanRequest.getUser().getUserName() ;
+            sendNotification = "Sent Final Approved Loan Notification with documents to " + loanRequest.getUser().getUserName() ;
         }else {
-            sendNotification = "Sent Loan Approval Notification to " + loanRequest.getUser().getUserName() ;
+            sendNotification = "Sent Loan Approval Notification to stage 1 " + loanRequest.getUser().getUserName() ;
         }
         return new ResponseEntity<>(sendNotification,HttpStatus.OK);
     }
